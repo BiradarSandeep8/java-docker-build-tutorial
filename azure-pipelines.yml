@@ -1,0 +1,26 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+jobs:
+- job: Build
+  displayName: Build image
+  pool:
+    vmImage: 'WindowVm'  # Use the agent pool name where you ran the old code
+  steps:
+  - task: Docker@2
+    displayName: Build an image
+    inputs:
+      command: build
+      dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+      tags: |
+        $(tag)
