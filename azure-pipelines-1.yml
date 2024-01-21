@@ -16,10 +16,6 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
-  # Agent VM image name
-  pool:
-  name: WindowVm
-
 stages:
 - stage: Build
   displayName: Build and push stage
@@ -27,7 +23,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'WindowVm'  # Assuming 'WindowVm' is the correct agent pool name
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
